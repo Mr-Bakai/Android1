@@ -1,5 +1,7 @@
 package com.hfad.mymessanger;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,15 +16,21 @@ public class CreateMessageActivity extends AppCompatActivity {
     }
 
     // this method called when the button is clicked
-    public void onSendMessage(View view){
+    public void onSendMessage(View view) {
 
         EditText messageView = (EditText) findViewById(R.id.message);
         String messageText = messageView.getText().toString();
 
-        Intent intent = new Intent(this, ReceiveMessageActivity.class); // RMA will be called in intent
+        Intent intent = new Intent(Intent.ACTION_SEND);
 
-        intent.putExtra(ReceiveMessageActivity.EXTRA_MESSAGE, messageText);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, messageText);
 
-        startActivity(intent);  // this will start the intent
+        String chooserTitle = getString(R.string.chooser);   // this gets chooser title from xml
+
+        Intent chosenIntent = Intent.createChooser(intent, chooserTitle);
+
+        startActivity(chosenIntent); // this will start the intent
+
     }
 }
